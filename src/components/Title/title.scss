@@ -1,5 +1,7 @@
 .header{
   background-color: #bb5432;
+  text-align: center;
+
   .header-content{
     color: white;
     padding: 2rem;
@@ -10,6 +12,7 @@
     }
     .header-info{
       margin-top: 0.5em;
+      font-size : 2em;
     }
   }
 }

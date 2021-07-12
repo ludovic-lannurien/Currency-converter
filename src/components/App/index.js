@@ -4,6 +4,8 @@ import React from 'react';
 // == Import
 import './styles.css';
 
+import currencies from 'src/data/currencies';
+
 // Import Components :
 import Title from '../Title';
 import Currency from '../Currency';
@@ -13,8 +15,12 @@ import Result from '../Result';
 const App = () => (
   <div className="app">
     <Title />
-    <Currency />
-    <Result />
+    <Currency
+      infos={currencies}
+    />
+    <Result
+      infos={currencies}
+    />
   </div>
 );
 

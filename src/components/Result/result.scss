@@ -1,3 +1,13 @@
-.result{
-  background-color: #bb5432;
+.results{
+  color: #bb5432;
+  text-align: center;
+  padding: 2em;
+  .result{
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .currency-check{
+    font-size: 2.5em;
+    padding:0.5em;
+  }
 }

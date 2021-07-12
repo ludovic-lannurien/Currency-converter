@@ -1,0 +1,15 @@
+.currencies{
+  color: #bb5432;
+  padding-left: 1em;
+  .currency{
+    border-bottom: 0.05em solid #bb5432;
+    padding: 1em;
+    font-size: 2em;
+
+    &:first-child {
+      // pas de bordure pour le dernier ingrédient
+    font-weight: bold;
+    }
+  }
+  
+}
