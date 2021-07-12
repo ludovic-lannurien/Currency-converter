@@ -1,10 +1,16 @@
 .currencies{
   color: #bb5432;
   padding-left: 1em;
+  overflow:auto;
+  list-style:none;
   .currency{
     border-bottom: 0.05em solid #bb5432;
     padding: 1em;
     font-size: 2em;
+    &:hover {
+      background-color: #bb5432;
+      color: white;
+    }
 
     &:first-child {
       // pas de bordure pour le dernier ingrédient

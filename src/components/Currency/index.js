@@ -5,6 +5,7 @@ import './currency.scss';
 
 const Currency = ({ infos }) => (
   <ul className="currencies">
+    <li className="currency">Currencies</li>
     {infos.map((item) => (
       <li className="currency" key={item.rate}>{item.name}</li>
     ))}
@@ -20,4 +21,5 @@ Currency.propTypes = {
     }).isRequired, // obligatoire de respecter le format
   ).isRequired, // la prop ingredients est obligatoire
 };
+
 export default Currency;
