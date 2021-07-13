@@ -32,10 +32,15 @@ Un composant React c'est une fonction, sauf si...
 => dans ce cas, on convertit le composant fonction en classe
 https://reactjs.org/docs/state-and-lifecycle.html#converting-a-function-to-a-class
 */
-class App extends React.Component {
-  render(){
-    let open = true;
 
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      open: true,
+    };
+  }
+  render(){
   return (
     <div className="app">
       <Title />
@@ -43,23 +48,24 @@ class App extends React.Component {
         type="button"
         onClick={() => {
           console.log('clic !');
-          open = !open;
+          //this.state.open = !this.state.open;
+          this.setState({
+            open: !this.state.open,
+          });
         }}
       >
         Toggle currencies
       </button>
-      {open && <Currency infos={currencies} />}
+      {this.state.open && <Currency infos={currencies} />}
       <Result
         infos={currencies}
       />
     </div>
   );
-
   }
 }
 // == Composant APP :
 // const App = () => {
-  
 // };
 
 // == Export
