@@ -20,20 +20,47 @@ import './styles.css';
 variable pour modifier l'affichage
 */
 
-// == Composant APP :
-const App = () => {
-  const open = true;
+/*
+state (état) du composant : données qui peuvent changer au fil du temps. Si on
+change ces données, React met automatiquement à jour l'affichage du composant.
+Deux façons de mettre en place un state dans un composant :
+- façon traditionnelle : transformer le composant pour l'écrire sous forme de classe
+- façon moderne : avec le hook d'état (et le composant reste une fonction)
+
+Un composant React c'est une fonction, sauf si...
+- je veux utiliser un state
+=> dans ce cas, on convertit le composant fonction en classe
+https://reactjs.org/docs/state-and-lifecycle.html#converting-a-function-to-a-class
+*/
+class App extends React.Component {
+  render(){
+    let open = true;
 
   return (
     <div className="app">
       <Title />
+      <button
+        type="button"
+        onClick={() => {
+          console.log('clic !');
+          open = !open;
+        }}
+      >
+        Toggle currencies
+      </button>
       {open && <Currency infos={currencies} />}
       <Result
         infos={currencies}
       />
     </div>
   );
-};
+
+  }
+}
+// == Composant APP :
+// const App = () => {
+  
+// };
 
 // == Export
 export default App;
