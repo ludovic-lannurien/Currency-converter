@@ -34,34 +34,34 @@ https://reactjs.org/docs/state-and-lifecycle.html#converting-a-function-to-a-cla
 */
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       open: true,
     };
   }
-  render(){
-  return (
-    <div className="app">
-      <Title />
-      <button
-        type="button"
-        onClick={() => {
-          console.log('clic !');
-          //this.state.open = !this.state.open;
-          this.setState({
-            open: !this.state.open,
-          });
-        }}
-      >
-        Toggle currencies
-      </button>
-      {this.state.open && <Currency infos={currencies} />}
-      <Result
-        infos={currencies}
-      />
-    </div>
-  );
+
+  render() {
+    const { open } = this.state;
+    return (
+      <div className="app">
+        <Title />
+        <button
+          type="button"
+          onClick={() => {
+            console.log('clic !');
+            // this.state.open = !this.state.open;
+            this.setState({
+              open: !open,
+            });
+          }}
+        >
+          Toggle currencies
+        </button>
+        {open && <Currency infos={currencies} />}
+        <Result />
+      </div>
+    );
   }
 }
 // == Composant APP :
