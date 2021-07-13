@@ -1,21 +1,25 @@
-.currencies{
-  color: #bb5432;
-  padding-left: 1em;
-  overflow:auto;
-  list-style:none;
-  .currency{
-    border-bottom: 0.05em solid #bb5432;
-    padding: 1em;
-    font-size: 2em;
-    &:hover {
-      background-color: #bb5432;
-      color: white;
-    }
+@use 'src/styles/vars';
 
-    &:first-child {
-      // pas de bordure pour le dernier ingrédient
-    font-weight: bold;
+.currencies{
+  text-align: left;
+  background-color: vars.$lightColor;
+  max-height: 350px;
+  overflow-y: auto;
+  
+  .currencies-title{
+    padding: vars.$gutter;
+    font-weight: vars.$fwBold;
+    margin-top: vars.$gutter;
+  }
+  .currency{
+    border-top: 1px solid vars.$altColor;
+    padding: vars.$gutter;
+    font-weight: vars.$fwMedium;
+    transition: background-color vars.$slowTransition;
+
+    &:hover {
+      background-color: vars.$altColor;
+      transition: background-color vars.$fastTransition;
     }
   }
-  
 }

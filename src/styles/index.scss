@@ -2,7 +2,9 @@
 @use 'vars';
 
 body {
-  font-family: sans-serif;
+  font-family: 'Spartan', sans-serif;
+  font-weight: vars.$fwLight;
+  color: vars.$mainColor;
 }
 
 /* 

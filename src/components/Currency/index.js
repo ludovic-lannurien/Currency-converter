@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import './currency.scss';
 
 const Currency = ({ infos }) => (
-  <ul className="currencies">
-    <li className="currency">Currencies</li>
-    {infos.map((item) => (
-      <li className="currency" key={item.rate}>{item.name}</li>
-    ))}
-  </ul>
+  <div className="currencies">
+    <ul>
+      <h2 className="currencies-title">Currencies</h2>
+      {infos.map((item) => (
+        <li className="currency" key={item.name}>{item.name}</li>
+      ))}
+    </ul>
+  </div>
 );
 
 Currency.propTypes = {
@@ -19,7 +21,11 @@ Currency.propTypes = {
       rate: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
     }).isRequired, // obligatoire de respecter le format
-  ).isRequired, // la prop ingredients est obligatoire
+  ).isRequired, // la prop "infos" est obligatoire
 };
 
 export default Currency;
+
+//! J'avais utilisé item.rate pour la key mais finalement, il existe un risque pour qu'un jour
+//! le taux soit identique à un autre donc vaut mieux ici mettre le name
+//! Mais normalement il devrait y avoir un id pour que celà soit parfait

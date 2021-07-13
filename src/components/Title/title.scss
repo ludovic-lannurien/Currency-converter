@@ -1,14 +1,16 @@
+@use 'src/styles/vars';
+
 .header{
-  background-color: #bb5432;
+  background-color: vars.$mainColor;
   text-align: center;
 
   .header-content{
-    color: white;
+    color: vars.$lightColor;
     padding: 2rem;
 
     .header-title{
-      font-size: 2.5em;
-      font-weight: bold;
+      font-size: 2em;
+      font-weight: vars.$fwBold;
     }
     .header-info{
       margin-top: 0.5em;
