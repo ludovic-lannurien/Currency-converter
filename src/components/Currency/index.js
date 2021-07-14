@@ -8,7 +8,7 @@ const Currency = ({ infos }) => (
     <ul>
       <h2 className="currencies-title">Currencies</h2>
       {infos.map((item) => (
-        <li className="currency" key={item.name}>{item.name}</li>
+        <li className="currency" key={item.name}>{item.name} </li>
       ))}
     </ul>
   </div>

@@ -38,28 +38,67 @@ class App extends React.Component {
     super(props);
     this.state = {
       open: true,
+      baseAmount: 1,
+      currency: 'Brazilian Real',
     };
   }
 
-  render() {
+  handleClick() {
+    console.log('clic !');
+
     const { open } = this.state;
+
+    // négation de la valeur de open : si open est false, !open est true
+
+    // INTERDIT de modifier directement le state, il faut passer par la
+    // méthode setState, sinon React ne voit pas qu'on a mis à jour le state
+    // et donc l'affichage n'est pas mis à jour
+    // this.state.open = !this.state.open;
+
+    // on décrit les modifications à appliquer sur le state
+    // => automatiquement React va refaire le rendu du composant App en
+    // utilisant les nouvelles valeurs du state
+    this.setState({
+      open: !open,
+    });
+  }
+
+  // TODO VOILA PLUS OU MOINS CE QU'il faut faire
+  //! Faire en sorte de récupérer une info sur le nom de la currency en event click pour pouvoir
+  //! changer la valeur de notre variable currency qui est en state
+  computeAmount() {
+    // TODO faire le calcul et retourner le résultat
+    // Récupérer le taux de convertion et le multiplier le baseAmount par le taux de la currency
+    const { baseAmount, currency } = this.state;
+    const currencySelected = currencies.find((item) => item.name === currency);
+    const { rate } = currencySelected;
+    const result = rate * baseAmount;
+
+    return result;
+  }
+
+  render() {
+    const { open, baseAmount, currency } = this.state;
+    const result = this.computeAmount();
     return (
       <div className="app">
-        <Title />
+        <Title baseAmount={baseAmount} />
         <button
           type="button"
-          onClick={() => {
-            console.log('clic !');
-            // this.state.open = !this.state.open;
-            this.setState({
-              open: !open,
-            });
-          }}
+          onClick={this.handleClick.bind(this)}
         >
           Toggle currencies
         </button>
-        {open && <Currency infos={currencies} />}
-        <Result />
+        {open
+        && (
+        <Currency
+          infos={currencies}
+        />
+        )}
+        <Result
+          amount={result}
+          currency={currency}
+        />
       </div>
     );
   }
