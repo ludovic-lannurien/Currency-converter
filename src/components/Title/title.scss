@@ -16,5 +16,15 @@
       margin-top: 0.5em;
       font-size : 2em;
     }
+    .header-input {
+      background-color: vars.$altColor;
+      margin-top: vars.$gutter;
+      height: 2rem;
+      padding-left: 1rem;
+      border: none;
+    }
+    &::placeholder {
+      color: vars.$altColor;
+    }
   }
 }

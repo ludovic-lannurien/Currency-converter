@@ -3,12 +3,35 @@ import PropTypes from 'prop-types';
 
 import './currency.scss';
 
-const Currency = ({ infos }) => (
+const Currency = ({
+  infos,
+  manageClick,
+  search,
+  setSearch,
+}) => (
   <div className="currencies">
+    <input
+      className="currencies-search"
+      type="text"
+      placeholder="Rechercher une devise"
+      onChange={(evt) => {
+        setSearch(evt.currentTarget.value);
+      }}
+      value={search}
+    />
     <ul>
-      <h2 className="currencies-title">Currencies</h2>
       {infos.map((item) => (
-        <li className="currency" key={item.name}>{item.name} </li>
+        <li
+          className="currency"
+          key={item.name}
+          onClick={() => {
+            console.log('clic sur une devise');
+            // on appelle la fonction fournie en prop
+            manageClick(item.name);
+          }}
+        >
+          {item.name}
+        </li>
       ))}
     </ul>
   </div>
@@ -16,6 +39,9 @@ const Currency = ({ infos }) => (
 
 Currency.propTypes = {
   /* tableau d'objets : on indique la forme des objets (les propriétés avec leur type) */
+  manageClick: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired,
   infos: PropTypes.arrayOf(
     PropTypes.shape({
       rate: PropTypes.number.isRequired,

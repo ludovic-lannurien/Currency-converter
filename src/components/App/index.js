@@ -5,6 +5,7 @@ import React from 'react';
 import currencies from 'src/data/currencies';
 
 // Import Components :
+import CustomButton from 'src/components/CustomButton';
 import Title from '../Title';
 import Currency from '../Currency';
 import Result from '../Result';
@@ -18,6 +19,19 @@ import './styles.css';
 - mettre en place un bouton
 - gérer un événement clic sur le bouton, et "connecter" le traitement avec la
 variable pour modifier l'affichage
+*/
+
+/*
+Champ contrôlé : pour ne pas risquer d'avoir de différence de valeur entre le
+state et l'input, on décide que le state est la seule source de vérité.
+Si l'input veut changer sa valeur (saisie utilisateur) : il informe App, qui fera
+appel à setState, donc ça provoquera un nouveau rendu, et App enverra en prop la
+nouvelle valeur au composant qui contient l'input.
+- avoir un champ dans le state pour stocker la valeur de l'input
+- contrôler le champ en lecture : fournir la valeur du state en prop du composant qui
+contient le champ, et l'input utilise cette prop pour son attribut value. A ce stade,
+l'input est en read-only, si on saisit des caractères ils n'apparaissent pas
+- contrôler le champ en écriture
 */
 
 /*
@@ -38,9 +52,30 @@ class App extends React.Component {
     super(props);
     this.state = {
       open: true,
-      baseAmount: 1,
+      baseAmount: '1',
       currency: 'Brazilian Real',
+      inputSearch: '',
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClickOnList = this.handleClickOnList.bind(this);
+    this.setSearch = this.setSearch.bind(this);
+    this.setSearchAmount = this.setSearchAmount.bind(this);
+  }
+
+  // appelé après le premier affichage du composant
+  componentDidMount() {
+    console.log('App - componentDidMount');
+
+    this.updateTitle();
+  }
+
+  // appelé après chaque mise à jour de l'affichage du composant
+  componentDidUpdate(prevProps, prevState) {
+    console.log('App - componentDidUpdate');
+    const { currency } = this.state;
+    if (prevState.currency !== currency) {
+      this.updateTitle();
+    }
   }
 
   handleClick() {
@@ -63,36 +98,91 @@ class App extends React.Component {
     });
   }
 
+  handleClickOnList(newCurrency) {
+    this.setState({
+      currency: newCurrency,
+    });
+  }
+
+  setSearch(newValue) {
+    this.setState({
+      inputSearch: newValue,
+    });
+  }
+
+  setSearchAmount(newAmount) {
+    this.setState({
+      baseAmount: newAmount,
+    });
+  }
+
+  updateTitle() {
+    console.log('mise a jour du titre');
+    const { currency } = this.state;
+    document.title = `Converter - ${currency}`;
+  }
+
   // TODO VOILA PLUS OU MOINS CE QU'il faut faire
   //! Faire en sorte de récupérer une info sur le nom de la currency en event click pour pouvoir
   //! changer la valeur de notre variable currency qui est en state
   computeAmount() {
-    // TODO faire le calcul et retourner le résultat
     // Récupérer le taux de convertion et le multiplier le baseAmount par le taux de la currency
     const { baseAmount, currency } = this.state;
-    const currencySelected = currencies.find((item) => item.name === currency);
-    const { rate } = currencySelected;
-    const result = rate * baseAmount;
+    const baseAmountAsNumber = parseInt(baseAmount, 10);
 
-    return result;
+    console.log(currency);
+    const currencySelected = currencies.find((item) => item.name === currency);
+    // eslint-disable-next-line prefer-destructuring
+    const rate = currencySelected.rate;
+
+    // multiplier le montant de base par le taux de conversion
+    const result = baseAmountAsNumber * rate;
+
+    // astuce pour arrondir à 2 décimales
+    return (Math.round(result * 100) / 100);
   }
 
   render() {
-    const { open, baseAmount, currency } = this.state;
+    const {
+      open,
+      baseAmount,
+      currency,
+      inputSearch,
+    } = this.state;
+
     const result = this.computeAmount();
+
+    //! ICI ON VIENT FAIRE EN SORTE QUE NOTRE VALUE DE INPUT FACE UN FILTRE EN FONCTION DE NOS DATAS
+    // Le premier if sert juste à ne pas changer la liste des currencies
+    // si rien n'est inscrit dans l'input et le else suit la logique de
+    // filtre avec la méthode filter de notre tableau data currencies
+    let filteredCurrencies;
+    if (inputSearch.length === 0) {
+      filteredCurrencies = currencies;
+    }
+    else {
+      filteredCurrencies = currencies.filter((item) => {
+        // ici on est obligé de créer 2 nouvelles variables pour faire en sorte
+        // que la saisie de l'utilisateur soit en minuscule et que les valeurs
+        // dans notre data ou dans l'input ne soit pas changé pour ne pas tout chamboulé
+        // la valeur de l'input ne doit pas être changé car sinon ça fait chelou quand
+        // on tape un truc dans l'input en majuscule tout se mettrait quand même en minuscule
+        const inputSearchLowered = inputSearch.toLowerCase();
+        const nameLowered = item.name.toLowerCase();
+        return nameLowered.includes(inputSearchLowered);
+      });
+    }
     return (
       <div className="app">
-        <Title baseAmount={baseAmount} />
-        <button
-          type="button"
-          onClick={this.handleClick.bind(this)}
-        >
-          Toggle currencies
-        </button>
+        <Title searchAmount={baseAmount} setSearchAmount={this.setSearchAmount} />
+        <CustomButton manageClick={this.handleClick} />
         {open
         && (
         <Currency
-          infos={currencies}
+          infos={filteredCurrencies}
+          manageClick={this.handleClickOnList}
+          search={inputSearch}
+          setSearch={this.setSearch}
         />
         )}
         <Result
