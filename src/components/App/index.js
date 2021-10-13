@@ -104,12 +104,14 @@ class App extends React.Component {
     });
   }
 
+  // Méthode qui me permet de modifier la valeur de mon input au niveau du composant currency
   setSearch(newValue) {
     this.setState({
       inputSearch: newValue,
     });
   }
 
+  // Méthode qui me permet de mofier la valeur de mon input que le baseAmount au niveau du titre
   setSearchAmount(newAmount) {
     this.setState({
       baseAmount: newAmount,
