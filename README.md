@@ -6,4 +6,4 @@ Je n'ai pas utilisé d'api pour ce projet, seulement un tableau de data des monn
 
 La particularité de ce projet est que j'ai utilisé des hooks pour les props.
 
-Je laisse mes commentaires pour une meilleures lisibilitées de mon code et une meilleure compréhension de ma démarche. 
+Je laisse mes commentaires pour une meilleure lisibilitée de mon code et une meilleure compréhension de ma démarche. 
